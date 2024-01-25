@@ -27,7 +27,7 @@ void findPrimesInRange(int threadNumber, int start, int end) {
     vector<pair<int, int>> primesWithThread;
     for (int i = start; i <= end; i++) {
         if (isPrime(i)) {
-            primesWithThread.push_back({threadNumber, i});
+            primesWithThread.emplace_back(threadNumber, i);
         }
     }
     // lock the mutex before modifying the shared resource
@@ -47,7 +47,7 @@ int main() {
     vector<thread> threads; // stores multiple threads
 
     const int startRange = 1;
-    const int endRange = 10000;
+    const int endRange = 100;
     const int threadCount = 10;
 
     int interval = (endRange - startRange + 1) / threadCount;
