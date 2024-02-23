@@ -40,7 +40,7 @@ public class UdpServer extends Thread{
                 socket.receive(packet);
                 String input = new String(packet.getData(), 0, packet.getLength());
                 
-                System.out.println("Client: " + input);
+                System.out.println("Client wants this to be calculated: " + input);
                 if("exit".equalsIgnoreCase(input.trim())) {
                     System.out.println("Client sent exit...Exiting...");
                     return;

@@ -34,7 +34,7 @@ public class UdpClient implements AutoCloseable{
         packet = new DatagramPacket(buf, buf.length);
         socket.receive(packet);
         String response = new String(packet.getData(), 0, packet.getLength());
-        System.out.println("Server: " + response);
+        System.out.println("Server response: " + response);
     }  
     
     @Override
