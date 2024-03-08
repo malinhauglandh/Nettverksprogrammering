@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <script>
+      let ws;
+      
+      function connect(){
+        ws = new WebSocket('ws://localhost:3001');
+        ws.onopen = function(){
+          console.log('Connected');
+          ws.send(JSON.stringify({ message: 'Hello from client' }));
+        }
+        ws.onclose = function(){
+          console.log('WebSocket connection closed');
+        }
+        ws.onmessage = function(event){
+          const messages = document.getElementById('messages');
+          const message = document.createElement('div');
+          message.textContent = event.data;
+          messages.appendChild(message);
+          console.log('Message received from server: ' + event.data);
+        }
+      }
+      function sendMessage() {
+        const messageInput = document.getElementById('message');
+        const message = messageInput.value;
+        if (ws && ws.readyState === WebSocket.OPEN) {
+          ws.send(JSON.stringify({ message: message }));
+          messageInput.value = '';
+          console.log('Message sent to server: ' + message);
+       } else {
+        console.log('WebSocket is not connected.');
+      }
+    }
+    connect();
+    </script>
+  </head>
+  <body>
+    <h1>WebSocket test page</h1>
+    <div id="sendMessage">
+        <input type="text" id="message" placeholder="Type your message here" />
+        <button onclick="sendMessage()">Send</button>
+    </div>
+    <p>Status:</p>
+    <div id="messages">
+    </div>
+  </body>
+</html>
